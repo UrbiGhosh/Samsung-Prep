@@ -7,18 +7,18 @@ using namespace std;
 int n;
 int calc(int mask, int i, vector<vector<int>>&dist, vector<vector<int>>&dp){
 
-    if(mask==((1<<1)|(1<<i)))
-        return dist[i][1];
+    if(mask==((1<<1)|(1<<i))) //only i amd 1 are present hence we must go home
+        return dist[i][1];    // gets added to ans
 
     if(dp[mask][i]!=-1)
         return dp[mask][i];
 
-    int m2=(mask&(~(1<<i)));
+    int m2=(mask&(~(1<<i)));  //removing ith bit from mask
     int ans=INT_MAX;
     
     for(int j=0; j<n; j++)
     {
-        if(j==1||(m2&(1<<j))==0)
+        if(j==1||(m2&(1<<j))==0)  // jth bit isnt involved in mask
             continue;
         ans=min(ans, dist[i][j]+calc(m2, j, dist, dp));
     }
